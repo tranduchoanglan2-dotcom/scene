@@ -7,19 +7,54 @@
     <style>
         body { margin: 0; overflow: hidden; background-color: #333; }
         canvas { display: block; }
+        #loading-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(18, 18, 18, 0.94);
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        #loading-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loading-track {
+            width: min(320px, calc(100vw - 48px));
+            height: 4px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background: #fff;
+            border-radius: inherit;
+            transition: width 0.2s ease;
+        }
     </style>
 </head>
 <body>
+    <div id="loading-screen">
+        <div class="loading-track">
+            <div id="progress-bar"></div>
+        </div>
+    </div>
+
     <script type="importmap">
         {
             "imports": {
                 "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/",
-                "lil-gui": "https://unpkg.com/lil-gui@0.19.1/dist/lil-gui.esm.min.js" 
+                "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
             }
         }
     </script>
 
+    <!-- load GSAP globally as a fallback for environments where ESM import may fail -->
+    <script src="https://unpkg.com/gsap@3.12.2/dist/gsap.min.js"></script>
     <script type="module" src="main.js"></script>
 </body>
 </html>
